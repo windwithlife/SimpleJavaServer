@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.project.meetinglive.dao.AdvertDao">
+
+	<!-- 获取首页Baner信息@author hejinguo -->
+    <select id="gethomePageBanner"  resultType="com.project.meetinglive.vo.BannerVO">
+      <![CDATA[
+        SELECT  a.id,a.adv_title advTitle,a.adv_pic_path  advPicPath
+                FROM  live_advert  a  WHERE a.adv_type=0 AND a.application_type=0 
+                    AND a.adv_status=1 
+                    AND a.start_date<=now() AND a.end_date>=now() 
+              ORDER BY a.adv_order ASC
+        ]]>       
+    </select>
+    
+    <!--查询资讯信息@author hejinguo -->
+    <select id="getInformationList"  resultType="com.project.meetinglive.vo.AdvertVO">
+      <![CDATA[
+         SELECT  a.id,a.adv_title advTitle,a.adv_pic_path  advPicPath,
+                 a.adv_source advSource,a.click_number clickNumber
+                 FROM  live_advert  a  
+                 WHERE a.adv_type=1 
+                    AND a.application_type=0 AND a.adv_status=1  
+                    AND a.start_date<=now() AND a.end_date>=now() 
+               ORDER BY a.adv_order ASC
+        ]]>       
+    </select>
+    
+    <!-- 获取资讯详情 @author  hejinguo -->
+    <select id="getInformationDetail" parameterType="java.lang.Integer" resultType="com.project.meetinglive.vo.AdvertVO">
+         SELECT  a.id,a.adv_title advTitle,a.adv_desc advDesc,a.adv_pic_path  advPicPath,
+               a.adv_source advSource,a.click_number clickNumber
+               FROM  live_advert  a  WHERE a.id=#{id}
+    </select>
+    
+    <!-- 查询Banner信息总记录数@author hejinguo -->
+    <select id="getAdvertListCount" parameterType="java.util.HashMap"  resultType="java.lang.Integer">
+         SELECT count(1) FROM  live_advert  a  WHERE a.adv_type=#{advType}
+    </select>
+    <!-- 查询全部Banner信息 @author hejinguo -->
+    <select  id="getAdvertList" parameterType="java.util.HashMap" resultType="com.project.meetinglive.vo.BannerVO">
+          SELECT  a.id,a.adv_title advTitle,a.adv_desc advDesc,a.adv_pic_path  advPicPath,a.adv_source advSource,
+                  a.start_date  startDate,a.end_date endDate,a.adv_status  advStatus,a.adv_order advOrder
+               FROM  live_advert  a  WHERE a.adv_type=#{advType}
+               ORDER BY a.id desc limit #{startIndex},#{pageSize}
+    </select>
+    
+    <!--添加广告信息@author  hejinguo -->
+    <insert id="addAdvert" parameterType="LiveAdvertModel" useGeneratedKeys="true" keyProperty="id">
+       <![CDATA[    
+         INSERT  INTO  live_advert(adv_title,adv_desc,adv_type,adv_pic_path,adv_source_type,adv_source,application_type,start_date,end_date,adv_status,adv_order,click_number,created_date,created_name) 
+                VALUES(#{advTitle},#{advDesc},#{advType},#{advPicPath},#{advSourceType},#{advSource},#{applicationType},#{startDate},#{endDate},#{advStatus},#{advOrder},#{clickNumber},now(),#{createdName})
+       ]]>
+    </insert>
+    
+    <!--根据ID查询广告信息@author  hejinguo -->
+    <select id="getLiveAdvertById" parameterType="java.lang.Integer"  resultType="LiveAdvertModel">
+          SELECT  a.id,a.adv_title advTitle,a.adv_desc advDesc,a.adv_type  advType,a.adv_pic_path  advPicPath,
+                  a.adv_source_type advSourceType,a.adv_source advSource,a.application_type applicationType,
+                  a.start_date  startDate,a.end_date endDate,a.adv_status  advStatus,a.adv_order advOrder,
+                  a.click_number  clickNumber
+               FROM  live_advert  a  where a.id=#{id}
+    </select>
+    
+    <!-- 修改广告信息@author  hejinguo-->
+    <update id="updateAdvert" parameterType="LiveAdvertModel">
+        UPDATE  live_advert adv  SET adv.adv_title=#{advTitle},adv.adv_desc=#{advDesc},
+		        adv.adv_source=#{advSource},adv.start_date=#{startDate},adv.end_date=#{endDate},
+		        adv.adv_status=#{advStatus},adv.adv_order=#{advOrder},
+		       <if test="advPicPath!=null and advPicPath!=''">
+				  adv.adv_pic_path=#{advPicPath},
+			   </if> 
+		        adv.updated_date=now(),adv.updated_name=#{updatedName} WHERE adv.id=#{id}
+    </update>
+    
+    <!-- 删除广告信息@author  hejinguo -->
+    <update id="deleteAdvert" parameterType="java.util.HashMap">
+       update  live_advert  adv  set  adv.adv_status=#{advStatus},adv.updated_date=now(),adv.updated_name=#{updatedName} 
+               WHERE adv.id=#{id}
+    </update>
+    
+   
+</mapper> 
