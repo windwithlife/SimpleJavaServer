@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.meetinglive.core.data.message.ResponseMessage;
-import com.project.meetinglive.core.data.pageBean.SinglePageBean;
-import com.project.meetinglive.core.data.request.JsonMessage;
-import com.project.meetinglive.core.exception.CommonExceptionHandle;
-import com.project.meetinglive.core.spring.interceptor.annotation.LoginRequired;
-import com.project.meetinglive.service.AdvertService;
-import com.project.meetinglive.vo.BannerVO;
+import com.simple.core.data.message.ResponseMessage;
+import com.simple.core.data.pageBean.SinglePageBean;
+import com.simple.core.data.request.JsonMessage;
+import com.simple.core.exception.CommonExceptionHandle;
+import com.simple.core.interceptor.annotation.LoginRequired;
+import com.simple,account.service.AdvertService;
+import com.simple.dto.BannerVO;
 
 /**
  * 广告资讯业务控制层

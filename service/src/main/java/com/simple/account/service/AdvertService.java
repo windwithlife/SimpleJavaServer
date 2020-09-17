@@ -8,15 +8,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.meetinglive.common.util.DateUtil;
-import com.project.meetinglive.core.data.pageBean.SinglePageBean;
-import com.project.meetinglive.core.data.request.JsonMessage;
-import com.project.meetinglive.core.exception.ServiceException;
-import com.project.meetinglive.core.freemarker.FreeMarkerHelp;
-import com.project.account.dao.AdvertDao;
-import com.project.meetinglive.modal.LiveAdvertModel;
-import com.project.meetinglive.vo.AdvertVO;
-import com.project.meetinglive.vo.BannerVO;
+import com.simple.core.util.DateUtil;
+import com.simple.core.data.pageBean.SinglePageBean;
+import com.simple.core.data.request.JsonMessage;
+import com.simple.core.exception.ServiceException;
+import com.simple.core.freemarker.FreeMarkerHelp;
+import com.simple.account.dao.AdvertDao;
+import com.simple.account.model.LiveAdvertModel;
+import com.simple.account.dto.AdvertVO;
+import com.simple.account.dto.BannerVO;
 
 /**
  * 广告资讯业务层
