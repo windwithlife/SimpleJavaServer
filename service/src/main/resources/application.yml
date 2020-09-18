@@ -25,4 +25,4 @@ staffjoy:
 
 server:
   servlet:
-    context-path: /meeting-server/cms
+    context-path: /meeting-cms
