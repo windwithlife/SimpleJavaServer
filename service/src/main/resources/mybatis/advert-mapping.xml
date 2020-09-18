@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace必须指向Dao接口 -->
-<mapper namespace="com.project.meetinglive.dao.AdvertDao">
+<mapper namespace="com.simple.example.dao.AdvertDao">
 
 	<!-- 获取首页Baner信息@author hejinguo -->
-    <select id="gethomePageBanner"  resultType="com.project.meetinglive.vo.BannerVO">
+    <select id="gethomePageBanner"  resultType="com.simple.example.dto.BannerVO">
       <![CDATA[
         SELECT  a.id,a.adv_title advTitle,a.adv_pic_path  advPicPath
                 FROM  live_advert  a  WHERE a.adv_type=0 AND a.application_type=0 
@@ -16,7 +16,7 @@
     </select>
     
     <!--查询资讯信息@author hejinguo -->
-    <select id="getInformationList"  resultType="com.project.meetinglive.vo.AdvertVO">
+    <select id="getInformationList"  resultType="com.simple.example.dto.AdvertVO">
       <![CDATA[
          SELECT  a.id,a.adv_title advTitle,a.adv_pic_path  advPicPath,
                  a.adv_source advSource,a.click_number clickNumber
@@ -29,7 +29,7 @@
     </select>
     
     <!-- 获取资讯详情 @author  hejinguo -->
-    <select id="getInformationDetail" parameterType="java.lang.Integer" resultType="com.project.meetinglive.vo.AdvertVO">
+    <select id="getInformationDetail" parameterType="java.lang.Integer" resultType="com.simple.example.dto.AdvertVO">
          SELECT  a.id,a.adv_title advTitle,a.adv_desc advDesc,a.adv_pic_path  advPicPath,
                a.adv_source advSource,a.click_number clickNumber
                FROM  live_advert  a  WHERE a.id=#{id}
@@ -40,7 +40,7 @@
          SELECT count(1) FROM  live_advert  a  WHERE a.adv_type=#{advType}
     </select>
     <!-- 查询全部Banner信息 @author hejinguo -->
-    <select  id="getAdvertList" parameterType="java.util.HashMap" resultType="com.project.meetinglive.vo.BannerVO">
+    <select  id="getAdvertList" parameterType="java.util.HashMap" resultType="com.simple.example.dto.BannerVO">
           SELECT  a.id,a.adv_title advTitle,a.adv_desc advDesc,a.adv_pic_path  advPicPath,a.adv_source advSource,
                   a.start_date  startDate,a.end_date endDate,a.adv_status  advStatus,a.adv_order advOrder
                FROM  live_advert  a  WHERE a.adv_type=#{advType}

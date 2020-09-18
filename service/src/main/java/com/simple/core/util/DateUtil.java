@@ -1,4 +1,4 @@
-package com.project.meetinglive.common.util;
+package com.simple.core.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

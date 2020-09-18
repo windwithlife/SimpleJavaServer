@@ -1,4 +1,4 @@
-package com.project.meetinglive.core.spring.interceptor.impl;
+package com.simple.core.interceptor.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.project.meetinglive.common.constant.DataEncode;
-import com.project.meetinglive.common.util.JsonUtil;
+import com.simple.core.util.JsonUtil;
 import com.simple.core.data.message.ResponseMessage;
 import com.simple.core.data.request.JsonMessage;
-import com.simple.core.spring.interceptor.annotation.LoginRequired;
-import com.simple.core.token.ValidateLoginHelp;
+import com.simple.core.interceptor.annotation.LoginRequired;
+//import com.simple.core.token.ValidateLoginHelp;
 
 /**
  * 拦截器,用于控制是否登录
@@ -63,17 +63,18 @@ public class HandlerAuthLoginContextInterceptor extends HandlerInterceptorAdapte
             jsonMessage.setSourceMessage(requestData);
 
             //用户登录验证
-            ResponseMessage responseMessage = ValidateLoginHelp.validateUserLogin(jsonMessage);
-            if (responseMessage.getStatus() != ResponseMessage.SUCCESS_CODE) {
-                returnJsonMessage(response, responseMessage);
-                return false;
-            } else {
-                return true;
-            }
+//            ResponseMessage responseMessage = ValidateLoginHelp.validateUserLogin(jsonMessage);
+//            if (responseMessage.getStatus() != ResponseMessage.SUCCESS_CODE) {
+//                returnJsonMessage(response, responseMessage);
+//                return false;
+//            } else {
+//                return true;
+//            }
         } catch (Exception e) {
             logger.error("登录拦截器读取请求体参数信息异常!", e);
         }
-        return false;
+        //return false;
+        return true;
     }
 
     @Override

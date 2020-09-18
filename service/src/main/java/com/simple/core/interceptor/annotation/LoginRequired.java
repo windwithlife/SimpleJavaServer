@@ -1,4 +1,4 @@
-package com.project.meetinglive.core.spring.interceptor.annotation;
+package com.simple.core.interceptor.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

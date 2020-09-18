@@ -1,4 +1,4 @@
-package com.project.meetinglive.common.util;
+package com.simple.core.util;
 
 import java.sql.Timestamp;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.project.meetinglive.core.spring.interceptor;
+package com.simple.core.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

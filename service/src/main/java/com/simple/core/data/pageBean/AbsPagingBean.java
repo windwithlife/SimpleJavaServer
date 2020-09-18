@@ -1,6 +1,6 @@
 package com.simple.core.data.pageBean;
 
-import com.project.meetinglive.core.data.message.ResponseMessage;
+import com.simple.core.data.message.ResponseMessage;
 
 /**
  * 分页参数实体

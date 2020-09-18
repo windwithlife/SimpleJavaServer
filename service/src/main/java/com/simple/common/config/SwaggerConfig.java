@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("xyz.staffjoy.account.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.simple.example.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiEndPointsInfo())
@@ -26,9 +26,9 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("Account REST API")
-                .description("Staffjoy Account REST API")
-                .contact(new Contact("bobo", "https://github.com/jskillcloud", "bobo@jskillcloud.com"))
+        return new ApiInfoBuilder().title("Example REST API")
+                .description("Simple Project Example REST API")
+                .contact(new Contact("zyq", "https://github.com/jskillcloud", "zhangyongqiao@gmail.com"))
                 .license("The MIT License")
                 .licenseUrl("https://opensource.org/licenses/MIT")
                 .version("V2")

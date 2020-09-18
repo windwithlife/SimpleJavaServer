@@ -3,7 +3,7 @@ package com.simple.core.data.message;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
-import com.project.meetinglive.core.data.request.JsonMessage;
+import com.simple.core.data.request.JsonMessage;
 
 /**
  * 请求响应协议头
