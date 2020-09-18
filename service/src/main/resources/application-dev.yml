@@ -10,6 +10,8 @@ spring:
       ddl-auto: update
 server:
   port: 8088
+  servlet:
+    context-path: /meeting-server/cms
 simple:
   domainName: koudaibook.com
   email-service-endpoint: http://localhost:8088

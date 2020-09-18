@@ -23,3 +23,6 @@ staffjoy:
   signing-secret: ${SIGNING_SECRET}
   email-service-endpoint: ${EMAIL_SERVICE_ENDPOINT:http://email-service:8080}
 
+server:
+  servlet:
+    context-path: /meeting-server/cms

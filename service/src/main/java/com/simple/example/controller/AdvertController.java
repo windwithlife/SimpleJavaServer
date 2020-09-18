@@ -1,5 +1,7 @@
 package com.simple.example.controller;
 
+import com.simple.common.api.BaseResponse;
+import com.simple.common.auth.AuthConstant;
 import com.simple.example.dto.BannerVO;
 import com.simple.example.service.AdvertService;
 import com.simple.core.data.message.ResponseMessage;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -230,6 +233,10 @@ public class AdvertController {
         }
         return resMessage;
     }
-
+    @GetMapping(path = "/test")
+    String changeEmail(@RequestParam @Valid String request){
+        //BaseResponse result = BaseResponse.builder().message(request).build();
+        return request;
+    }
 
 }
