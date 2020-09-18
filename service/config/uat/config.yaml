@@ -22,4 +22,7 @@ data:
   ACCOUNT_DATASOURCE_URL: jdbc:mysql://test.koudaibook.com:30006/mydb?useUnicode=true&characterEncoding=utf-8
   ACCOUNT_DATASOURCE_USERNAME: root
   ACCOUNT_DATASOURCE_PASSWORD: Password!&
+  NEWS_DATASOURCE_URL: jdbc:mysql://testdb.koudaibook.com:30006/mydb?useUnicode=true&characterEncoding=utf-8
+  NEWS_DATASOURCE_USERNAME: root
+  NEWS_DATASOURCE_PASSWORD: 123456
   
