@@ -1,6 +1,7 @@
 package com.simple.example.model;
 
-import com.simple.core.exception.ServiceException;
+
+import com.simple.common.error.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -32,7 +32,7 @@ import com.simple.example.dto.BannerVO;
  * @version $Id: ApiAdvertController.java, v 0.1 2020年7月25日 下午12:03:02
  */
 @RestController
-@RequestMapping("api/advertService")
+@RequestMapping("/advertService/mobile")
 public class ApiAdvertController {
     private static final Logger logger = LoggerFactory.getLogger(ApiAdvertController.class);
     @Autowired

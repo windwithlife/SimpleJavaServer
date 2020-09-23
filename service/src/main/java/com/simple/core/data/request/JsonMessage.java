@@ -24,8 +24,8 @@ public class JsonMessage extends RequestMessage {
         setVersion(jsonMessage.getVersion());
         setCategory(jsonMessage.getCategory());
         setPlatType(jsonMessage.getPlatType());
-        setPlatForm(jsonMessage.getPlatForm());
-        setToken(jsonMessage.getToken());
+//        setPlatForm(jsonMessage.getPlatForm());
+//        setToken(jsonMessage.getToken());
     }
 
     public JsonMessage(Integer version, Integer category, Integer platType, String platform,
@@ -33,7 +33,7 @@ public class JsonMessage extends RequestMessage {
         this.version = version;
         this.category = category;
         this.platType = platType;
-        this.platForm = platform;
+        //this.platForm = platform;
         this.sourceMessage = sourceMessage;
         this.data = data;
     }
@@ -43,7 +43,7 @@ public class JsonMessage extends RequestMessage {
         this.version = version;
         this.category = category;
         this.platType = platType;
-        this.platForm = platform;
+        //this.platForm = platform;
         this.sourceMessage = sourceMessage;
         this.data = data;
     }
@@ -206,7 +206,7 @@ public class JsonMessage extends RequestMessage {
     @Override
     public String toString() {
         return "JsonMessage [jsonMessage=" + data + ", version=" + version + ", category="
-               + category + ",platType=" + platType + ", platform=" + platForm + ", source="
+               + category + ",platType=" + platType + ",  source="
                + sourceMessage + "]";
     }
 

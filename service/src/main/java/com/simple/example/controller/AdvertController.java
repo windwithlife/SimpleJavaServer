@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * @version $Id: ApiAdvertController.java, v 0.1 2020年7月25日 下午12:03:02
  */
 @RestController
-@RequestMapping("/pc/advertService")
+@RequestMapping("/advertService/pc")
 public class AdvertController {
     private static final Logger logger = LoggerFactory.getLogger(AdvertController.class);
     @Autowired

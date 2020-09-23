@@ -1,4 +1,4 @@
-package com.simple.core.helper;
+package com.simple.core.exception;
 
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
@@ -21,8 +21,22 @@ public class ServiceHelper {
             sentryClient.sendMessage(errMsg);
         }
     }
+
+    public void handleError(String errMsg) {
+        logger.error(errMsg);
+        if (!envConfig.isDebug()) {
+            sentryClient.sendMessage(errMsg);
+        }
+    }
     public void handleException(ILogger log, Exception ex, String errMsg) {
         log.error(errMsg, ex);
+        if (!envConfig.isDebug()) {
+            sentryClient.sendException(ex);
+        }
+    }
+
+    public void handleException( Exception ex, String errMsg) {
+        logger.error(errMsg, ex);
         if (!envConfig.isDebug()) {
             sentryClient.sendException(ex);
         }

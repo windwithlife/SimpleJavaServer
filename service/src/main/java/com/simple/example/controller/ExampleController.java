@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/example")
+@RequestMapping("/example/mobile")
 @Validated
 public class ExampleController {
     static RsaJsonWebKey jwk = null;

@@ -4,8 +4,8 @@ import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 import com.simple.example.dto.AccountDto;
 import com.simple.example.model.Example;
-import com.simple.example.repo.AccountRepo;
-import com.simple.core.helper.ServiceHelper;
+import com.simple.example.dao.ExampleRepo;
+import com.simple.core.exception.ServiceHelper;
 import com.simple.common.api.ResultCode;
 import com.simple.common.auditlog.LogEntry;
 import com.simple.common.auth.AuthConstant;
@@ -29,7 +29,7 @@ public class ExampleService {
 
     static ILogger logger = SLoggerFactory.getLogger(ExampleService.class);
 
-    private final AccountRepo accountRepo;
+    private final ExampleRepo exampleRepo;
 
 
 
@@ -54,7 +54,7 @@ public class ExampleService {
 
 
         if (StringUtils.hasText(phoneNumber)) {
-            Example foundExample = accountRepo.findAccountByPhoneNumber(phoneNumber);
+            Example foundExample = exampleRepo.findAccountByPhoneNumber(phoneNumber);
             if (foundExample != null) {
                 throw new ServiceException("A user with that phonenumber already exists. Try a new phonenumber");
             }
@@ -77,7 +77,7 @@ public class ExampleService {
 
 
         try {
-            Example result = accountRepo.save(example);
+            Example result = exampleRepo.save(example);
             String userId = result.getId();
             //this.updatePassword(userId, pwd);
         } catch (Exception ex) {
@@ -96,21 +96,21 @@ public class ExampleService {
     public AccountDto update(AccountDto newAccountDto) {
         Example newExample = this.convertToModel(newAccountDto);
 
-        Example existingExample = accountRepo.findAccountById(newExample.getId());
+        Example existingExample = exampleRepo.findAccountById(newExample.getId());
         if (existingExample == null) {
             throw new ServiceException(ResultCode.NOT_FOUND, String.format("User with id %s not found", newExample.getId()));
         }
         entityManager.detach(existingExample);
 
         if (StringUtils.hasText(newExample.getEmail()) && !newExample.getEmail().equals(existingExample.getEmail())) {
-            Example foundExample = accountRepo.findAccountByEmail(newExample.getEmail());
+            Example foundExample = exampleRepo.findAccountByEmail(newExample.getEmail());
             if (foundExample != null) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "A user with that email already exists. Try a password reset");
             }
         }
 
         if (StringUtils.hasText(newExample.getPhoneNumber()) && !newExample.getPhoneNumber().equals(existingExample.getPhoneNumber())) {
-            Example foundExample = accountRepo.findAccountByPhoneNumber(newExample.getPhoneNumber());
+            Example foundExample = exampleRepo.findAccountByPhoneNumber(newExample.getPhoneNumber());
             if (foundExample != null) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "A user with that phonenumber already exists. Try a password reset");
             }
@@ -136,7 +136,7 @@ public class ExampleService {
         newExample.setPhotoUrl(Helper.generateGravatarUrl(newExample.getEmail()));
 
         try {
-            accountRepo.save(newExample);
+            exampleRepo.save(newExample);
         } catch (Exception ex) {
             String errMsg = "Could not update the user account";
             serviceHelper.handleException(logger, ex, errMsg);

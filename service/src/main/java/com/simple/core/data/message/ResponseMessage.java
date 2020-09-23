@@ -53,9 +53,9 @@ public class ResponseMessage extends AbsDataMessage {
             this.setVersion(jsonMessage.getVersion());
             this.setCategory(jsonMessage.getCategory());
             this.setPlatType(jsonMessage.getPlatType());
-            this.setPlatForm(jsonMessage.getPlatForm());
-            this.setToken(jsonMessage.getToken());
-            this.setOpenId(jsonMessage.getOpenId());
+//            this.setPlatForm(jsonMessage.getPlatForm());
+//            this.setToken(jsonMessage.getToken());
+//            this.setOpenId(jsonMessage.getOpenId());
             this.setStatus(ResponseMessage.FAILURE_CODE);
         }
     }
