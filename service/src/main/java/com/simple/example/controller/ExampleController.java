@@ -47,8 +47,8 @@ public class ExampleController {
         return result;
     }
 
-    @GetMapping(path = "/test")
-    BaseResponse changeEmail(@RequestParam @Valid String request){
+    @GetMapping(path = "/testrequest")
+    BaseResponse test(@RequestParam @Valid String request){
         BaseResponse result = BaseResponse.build().message(request);
         return result;
     }
