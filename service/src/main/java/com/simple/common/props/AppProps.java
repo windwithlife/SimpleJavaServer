@@ -16,9 +16,5 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppProps {
-    @NotNull
-    private String intercomAccessToken;
-    @NotNull
-    private String signingSecret;
     private String domainName;
 }

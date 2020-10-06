@@ -1,6 +1,6 @@
 package com.simple.example.dao;
 
-import com.simple.example.model.Example;
+import com.simple.example.model.ExampleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,17 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository
-public interface ExampleRepo extends JpaRepository<Example, String> {
+public interface ExampleRepo extends JpaRepository<ExampleModel, String> {
 
-    Example findAccountById(String id);
+    ExampleModel findAccountById(String id);
 
-    Example findAccountByEmail(String email);
-    Example findAccountByName(String name);
+    ExampleModel findAccountByEmail(String email);
+    ExampleModel findAccountByName(String name);
 
-    Example findAccountByPhoneNumber(String phoneNumber);
+    ExampleModel findAccountByPhoneNumber(String phoneNumber);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Example account set account.email = :email, account.confirmedAndActive = true where account.id = :id")
+    @Query("update ExampleModel account set account.email = :email, account.confirmedAndActive = true where account.id = :id")
     @Transactional
     int updateEmailAndActivateById(@Param("email") String email, @Param("id") String id);
 

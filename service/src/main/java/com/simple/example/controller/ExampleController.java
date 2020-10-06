@@ -1,12 +1,16 @@
 package com.simple.example.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 import com.simple.common.api.BaseResponse;
+import com.simple.common.api.GenericRequest;
+import com.simple.common.api.GenericResponse;
 import com.simple.common.auth.AuthConstant;
 import com.simple.example.dto.AccountDto;
 import com.simple.example.dto.CreateAccountRequest;
 import com.simple.example.dto.GenericAccountResponse;
+import com.simple.example.model.ExampleModel;
 import com.simple.example.service.ExampleService;
 import com.simple.common.env.EnvConfig;
 import com.simple.common.props.AppProps;
@@ -28,11 +32,7 @@ public class ExampleController {
     @Autowired
     private ExampleService exampleService;
 
-    @Autowired
-    private EnvConfig envConfig;
 
-    @Autowired
-    private AppProps appProps;
 
     @PostMapping(path = "/create")
     public GenericAccountResponse createAccount(@RequestBody @Valid CreateAccountRequest request) {
@@ -43,7 +43,40 @@ public class ExampleController {
 
     @GetMapping(path = "/test")
     BaseResponse changeEmail(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestParam @Valid String request){
-        BaseResponse result = BaseResponse.builder().message(request).build();
+        BaseResponse result = BaseResponse.build().message(request);
         return result;
     }
+
+    @GetMapping(path = "/test")
+    BaseResponse changeEmail(@RequestParam @Valid String request){
+        BaseResponse result = BaseResponse.build().message(request);
+        return result;
+    }
+
+    @GetMapping(path = "/testexample1")
+    BaseResponse testexample(@RequestBody GenericRequest req){
+       return GenericResponse.builder().data(JSON.parseObject(JSON.toJSONString(req))).build();
+    }
+
+    @GetMapping(path = "/testexample2")
+    BaseResponse testexample4(@RequestBody GenericRequest req, @RequestParam String inputString){
+        GenericResponse result = GenericResponse.builder().build();
+        result.addKey$Value("msg", inputString);
+        result.addKey$Value("requestName", req.getString("name"));
+        return result;
+    }
+
+    @GetMapping(path = "/testexample3")
+    BaseResponse testexample2(@RequestBody GenericRequest req){
+        GenericResponse result = GenericResponse.builder().build();
+        result.setDataObject(req);
+        return result;
+    }
+    @GetMapping(path = "/testexample4")
+    BaseResponse testexample3(@RequestBody GenericRequest req){
+        GenericResponse result = GenericResponse.builder().build();
+        result.setDataObject(req);
+        return result;
+    }
+
 }

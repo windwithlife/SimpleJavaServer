@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.simple.example.dao.ExampleDao">
+
+    <resultMap id="AccountModelMap" type="com.simple.example.model.ExampleModel" >
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="password_hash" property="passwordHash" jdbcType="VARCHAR" />
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+        <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
+        <result column="confirmed_and_active" property="confirmedAndActive" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+
+    <!--添加用户信息-->
+    <insert id="add" parameterType="ExampleModel"  >
+        <selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+            select uuid()
+        </selectKey>
+        <![CDATA[
+         INSERT  INTO  example(id,name,email,photo_url,phone_number,confirmed_and_active)
+                VALUES(#{id},#{name},#{email},#{photoUrl},#{phoneNumber},#{confirmedAndActive})
+       ]]>
+    </insert>
+
+
+    <!-- 修改-->
+    <update id="update" parameterType="ExampleModel">
+        UPDATE  example adv  SET adv.name=#{name},adv.email=#{email},
+        adv.phone_url=#{photoUrl},adv.phone_number=#{phoneNumber},adv.confirm_and_active=#{confirmedAndActive},
+        adv.adv_status=#{advStatus},adv.adv_order=#{advOrder},
+        <if test="message!=null and message!=''">
+            adv.message=#{message},
+        </if>
+        adv.updated_date=now() WHERE adv.id=#{id}
+    </update>
+
+    <!-- 删除-->
+    <update id="deleteById" parameterType="java.lang.Integer">
+       delete  example WHERE id=#{id}
+    </update>
+
+    <!--根据名称查询-->
+    <select id="findByName" parameterType="java.lang.String"  resultType="ExampleModel">
+          SELECT  *
+               FROM  example  a  where a.name=#{name}
+    </select>
+
+
+
+
+
+</mapper> 

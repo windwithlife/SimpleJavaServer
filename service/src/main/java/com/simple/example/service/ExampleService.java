@@ -2,10 +2,11 @@ package com.simple.example.service;
 
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
+import com.simple.common.error.ServiceHelper;
 import com.simple.example.dto.AccountDto;
-import com.simple.example.model.Example;
+import com.simple.example.model.ExampleModel;
 import com.simple.example.dao.ExampleRepo;
-import com.simple.core.exception.ServiceHelper;
+
 import com.simple.common.api.ResultCode;
 import com.simple.common.auditlog.LogEntry;
 import com.simple.common.auth.AuthConstant;
@@ -54,8 +55,8 @@ public class ExampleService {
 
 
         if (StringUtils.hasText(phoneNumber)) {
-            Example foundExample = exampleRepo.findAccountByPhoneNumber(phoneNumber);
-            if (foundExample != null) {
+            ExampleModel foundExampleModel = exampleRepo.findAccountByPhoneNumber(phoneNumber);
+            if (foundExampleModel != null) {
                 throw new ServiceException("A user with that phonenumber already exists. Try a new phonenumber");
             }
         }
@@ -71,72 +72,72 @@ public class ExampleService {
             phoneNumber = "";
         }
 
-        Example example = Example.builder()
+        ExampleModel exampleModel = ExampleModel.builder()
                 .email(email).name(name).phoneNumber(phoneNumber)
                 .build();
 
 
         try {
-            Example result = exampleRepo.save(example);
+            ExampleModel result = exampleRepo.save(exampleModel);
             String userId = result.getId();
             //this.updatePassword(userId, pwd);
         } catch (Exception ex) {
-            String errMsg = "Could not create user example";
+            String errMsg = "Could not create user exampleModel";
             serviceHelper.handleException(logger, ex, errMsg);
             throw new ServiceException(errMsg, ex);
         }
 
 
-        AccountDto accountDto = this.convertToDto(example);
+        AccountDto accountDto = this.convertToDto(exampleModel);
         return accountDto;
     }
 
 
 
     public AccountDto update(AccountDto newAccountDto) {
-        Example newExample = this.convertToModel(newAccountDto);
+        ExampleModel newExampleModel = this.convertToModel(newAccountDto);
 
-        Example existingExample = exampleRepo.findAccountById(newExample.getId());
-        if (existingExample == null) {
-            throw new ServiceException(ResultCode.NOT_FOUND, String.format("User with id %s not found", newExample.getId()));
+        ExampleModel existingExampleModel = exampleRepo.findAccountById(newExampleModel.getId());
+        if (existingExampleModel == null) {
+            throw new ServiceException(ResultCode.NOT_FOUND, String.format("User with id %s not found", newExampleModel.getId()));
         }
-        entityManager.detach(existingExample);
+        entityManager.detach(existingExampleModel);
 
-        if (StringUtils.hasText(newExample.getEmail()) && !newExample.getEmail().equals(existingExample.getEmail())) {
-            Example foundExample = exampleRepo.findAccountByEmail(newExample.getEmail());
-            if (foundExample != null) {
+        if (StringUtils.hasText(newExampleModel.getEmail()) && !newExampleModel.getEmail().equals(existingExampleModel.getEmail())) {
+            ExampleModel foundExampleModel = exampleRepo.findAccountByEmail(newExampleModel.getEmail());
+            if (foundExampleModel != null) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "A user with that email already exists. Try a password reset");
             }
         }
 
-        if (StringUtils.hasText(newExample.getPhoneNumber()) && !newExample.getPhoneNumber().equals(existingExample.getPhoneNumber())) {
-            Example foundExample = exampleRepo.findAccountByPhoneNumber(newExample.getPhoneNumber());
-            if (foundExample != null) {
+        if (StringUtils.hasText(newExampleModel.getPhoneNumber()) && !newExampleModel.getPhoneNumber().equals(existingExampleModel.getPhoneNumber())) {
+            ExampleModel foundExampleModel = exampleRepo.findAccountByPhoneNumber(newExampleModel.getPhoneNumber());
+            if (foundExampleModel != null) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "A user with that phonenumber already exists. Try a password reset");
             }
         }
 
         if (AuthConstant.AUTHORIZATION_AUTHENTICATED_USER.equals(AuthContext.getAuthz())) {
-            if (!existingExample.isConfirmedAndActive() && newExample.isConfirmedAndActive()) {
+            if (!existingExampleModel.isConfirmedAndActive() && newExampleModel.isConfirmedAndActive()) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "You cannot activate this account");
             }
-            if (existingExample.isSupport() != newExample.isSupport()) {
+            if (existingExampleModel.isSupport() != newExampleModel.isSupport()) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "You cannot change the support parameter");
             }
-            if (!existingExample.getPhotoUrl().equals(newExample.getPhotoUrl())) {
+            if (!existingExampleModel.getPhotoUrl().equals(newExampleModel.getPhotoUrl())) {
                 throw new ServiceException(ResultCode.REQ_REJECT, "You cannot change the photo through this endpoint (see docs)");
             }
             // User can request email change - not do it :-)
-            if (!existingExample.getEmail().equals(newExample.getEmail())) {
+            if (!existingExampleModel.getEmail().equals(newExampleModel.getEmail())) {
 
-                newExample.setEmail(existingExample.getEmail());
+                newExampleModel.setEmail(existingExampleModel.getEmail());
             }
         }
 
-        newExample.setPhotoUrl(Helper.generateGravatarUrl(newExample.getEmail()));
+        newExampleModel.setPhotoUrl(Helper.generateGravatarUrl(newExampleModel.getEmail()));
 
         try {
-            exampleRepo.save(newExample);
+            exampleRepo.save(newExampleModel);
         } catch (Exception ex) {
             String errMsg = "Could not update the user account";
             serviceHelper.handleException(logger, ex, errMsg);
@@ -149,33 +150,33 @@ public class ExampleService {
                 .authorization(AuthContext.getAuthz())
                 .currentUserId(AuthContext.getUserId())
                 .targetType("account")
-                .targetId(newExample.getId())
-                .originalContents(existingExample.toString())
-                .updatedContents(newExample.toString())
+                .targetId(newExampleModel.getId())
+                .originalContents(existingExampleModel.toString())
+                .updatedContents(newExampleModel.toString())
                 .build();
 
         logger.info("updated account", auditLog);
 
         // If account is being activated, or if phone number is changed by current user - send text
-        if (newExample.isConfirmedAndActive() &&
-                StringUtils.hasText(newExample.getPhoneNumber()) &&
-                !newExample.getPhoneNumber().equals(existingExample.getPhoneNumber())) {
-            //serviceHelper.sendSmsGreeting(newExample.getId());
+        if (newExampleModel.isConfirmedAndActive() &&
+                StringUtils.hasText(newExampleModel.getPhoneNumber()) &&
+                !newExampleModel.getPhoneNumber().equals(existingExampleModel.getPhoneNumber())) {
+            //serviceHelper.sendSmsGreeting(newExampleModel.getId());
         }
 
         //this.trackEventWithAuthCheck("account_updated");
 
-        AccountDto accountDto = this.convertToDto(newExample);
+        AccountDto accountDto = this.convertToDto(newExampleModel);
         return accountDto;
     }
 
 
-    private AccountDto convertToDto(Example example) {
-        return modelMapper.map(example, AccountDto.class);
+    private AccountDto convertToDto(ExampleModel exampleModel) {
+        return modelMapper.map(exampleModel, AccountDto.class);
     }
 
-    private Example convertToModel(AccountDto accountDto) {
-        return modelMapper.map(accountDto, Example.class);
+    private ExampleModel convertToModel(AccountDto accountDto) {
+        return modelMapper.map(accountDto, ExampleModel.class);
     }
 
 
