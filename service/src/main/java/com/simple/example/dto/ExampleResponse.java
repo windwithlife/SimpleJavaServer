@@ -1,18 +1,17 @@
 package com.simple.example.dto;
 
+import com.simple.common.api.BaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.Instant;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExampleVO {
+public class ExampleResponse extends BaseResponse {
     private String id;
     private String name;
     private String email;
@@ -21,6 +20,4 @@ public class ExampleVO {
     private boolean support;
     private String phoneNumber;
     private String photoUrl;
-    private String message;
-    private Date updatedDate;
 }

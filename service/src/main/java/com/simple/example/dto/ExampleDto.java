@@ -11,13 +11,14 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExampleSimpleVO {
+public class ExampleDto {
     private String id;
     private String name;
     private String email;
     private boolean confirmedAndActive;
     private Instant memberSince;
     private boolean support;
+    private String message;
     private String phoneNumber;
     private String photoUrl;
 }

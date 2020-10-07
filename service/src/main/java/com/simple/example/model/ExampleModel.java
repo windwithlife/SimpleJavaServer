@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Date;
 
@@ -18,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name="example")
 public class ExampleModel {
     @Id
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

@@ -23,21 +23,21 @@
             select uuid()
         </selectKey>
         <![CDATA[
-         INSERT  INTO  example(id,name,email,photo_url,phone_number,confirmed_and_active)
-                VALUES(#{id},#{name},#{email},#{photoUrl},#{phoneNumber},#{confirmedAndActive})
+         INSERT  INTO  example(id,name,email,photo_url,phone_number,confirmed_and_active,support,message,updated_date)
+                VALUES(#{id},#{name},#{email},#{photoUrl},#{phoneNumber},#{confirmedAndActive},#{support},#{message},now())
        ]]>
     </insert>
 
 
     <!-- 修改-->
     <update id="update" parameterType="ExampleModel">
-        UPDATE  example adv  SET adv.name=#{name},adv.email=#{email},
-        adv.phone_url=#{photoUrl},adv.phone_number=#{phoneNumber},adv.confirm_and_active=#{confirmedAndActive},
-        adv.adv_status=#{advStatus},adv.adv_order=#{advOrder},
+        UPDATE  example a  SET a.name=#{name},a.email=#{email},
+        a.phone_url=#{photoUrl},a.phone_number=#{phoneNumber},a.confirm_and_active=#{confirmedAndActive},
+        a.a_status=#{aStatus},a.a_order=#{aOrder},
         <if test="message!=null and message!=''">
-            adv.message=#{message},
+            a.message=#{message},
         </if>
-        adv.updated_date=now() WHERE adv.id=#{id}
+        a.updated_date=now() WHERE a.id=#{id}
     </update>
 
     <!-- 删除-->

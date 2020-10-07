@@ -1,11 +1,10 @@
 package com.simple.example.dao;
 
-import com.simple.example.dto.BannerVO;
+
 import com.simple.example.model.ExampleModel;
-import com.simple.example.model.LiveAdvertModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,20 @@ public interface ExampleDao {
 
 
 
-    ExampleModel findByName(String name) throws Exception;
+    List<ExampleModel> findByName(String name) throws Exception;
+    /**
+     * 添加
+     * @param addModel
+     * @throws Exception
+     */
+    void add(ExampleModel model) throws Exception;
+
+    /**
+     * 修改
+     * @param updateModel
+     * @throws Exception
+     */
+    void update(ExampleModel model) throws Exception;
 
     /**
      * 分页获取全部总记录数
@@ -30,21 +42,9 @@ public interface ExampleDao {
      * @return
      * @throws Exception
      */
-    int getAdvertListCount(Map<String, Object> paramMap) throws Exception;
+    int getCount(Map<String, Object> paramMap) throws Exception;
 
-    /**
-     * 分页获取全部
-     * @return
-     * @throws Exception
-     */
-    List<BannerVO> getAdvertList(Map<String, Object> paramMap) throws Exception;
 
-    /**
-     * 添加
-     * @param advertModel
-     * @throws Exception
-     */
-    void add(ExampleModel advertModel) throws Exception;
 
     /**
      * 根据ID查询
@@ -52,21 +52,15 @@ public interface ExampleDao {
      * @return
      * @throws Exception
      */
-    LiveAdvertModel getLiveAdvertById(@Param("id") Integer id) throws Exception;
+    ExampleModel findById(@Param("id") Integer id) throws Exception;
 
-    /**
-     * 修改
-     * @param advertModel
-     * @throws Exception
-     */
-    void updateAdvert(LiveAdvertModel advertModel) throws Exception;
 
     /**
      * 删除
      * @param paramMap
      * @throws Exception
      */
-    void deleteAdvert(Map<String, Object> paramMap) throws Exception;
+    void deleteById(Map<String, Object> paramMap) throws Exception;
 
 
 }
