@@ -8,7 +8,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.simple.common.async.ContextCopyingDecorator;
-import com.simple.common.config.StaffjoyRestConfig;
+
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,7 +16,7 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync
-@Import(value = {StaffjoyRestConfig.class})
+@Import(value = {SimpleRestConfig.class})
 @SuppressWarnings(value = "Duplicates")
 public class AppConfig {
 

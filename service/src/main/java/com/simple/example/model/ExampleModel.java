@@ -26,7 +26,6 @@ public class ExampleModel {
     private String email;
     private String message;
     private boolean confirmedAndActive;
-    private Instant memberSince;
     private boolean support;
     private String phoneNumber;
     private String photoUrl;

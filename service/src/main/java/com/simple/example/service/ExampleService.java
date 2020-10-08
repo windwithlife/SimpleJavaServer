@@ -41,7 +41,11 @@ public class ExampleService {
         try{
             ExampleModel model = this.convertToModel(example);
             this.exampleDao.add(model);
-            return this.convertToVO(model);
+            System.out.println(model.toString());
+            ExampleVO vo = this.convertToVO(model);
+            System.out.println(vo.toString());
+            //return this.convertToVO(model);
+            return vo;
 
         }catch (Exception ex){
             ServiceHelper.handleServiceException(ex,"failed");
@@ -55,6 +59,7 @@ public class ExampleService {
         try{
             ExampleModel model = this.convertToModel(example);
             this.exampleDao.add(model);
+
             return this.convertToVO(model);
 
         }catch (Exception ex){

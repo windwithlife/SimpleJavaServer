@@ -4,7 +4,7 @@
 <!-- namespace必须指向Dao接口 -->
 <mapper namespace="com.simple.example.dao.ExampleDao">
 
-    <resultMap id="AccountModelMap" type="com.simple.example.model.ExampleModel" >
+    <resultMap id="ExampleModelMap" type="com.simple.example.model.ExampleModel" >
         <result column="id" property="id" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="email" property="email" jdbcType="VARCHAR" />
@@ -13,6 +13,7 @@
         <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
         <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
         <result column="confirmed_and_active" property="confirmedAndActive" jdbcType="VARCHAR" />
+        <result property="updatedDate" column="updated_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
 
