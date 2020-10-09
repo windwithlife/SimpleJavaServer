@@ -28,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("ExampleModel REST API")
                 .description("Simple Project ExampleModel REST API")
-                .contact(new Contact("zyq", "https://github.com/jskillcloud", "zhangyongqiao@gmail.com"))
+                .contact(new Contact("zyq", "https://github.com/windwithlife", "zhangyongqiao@gmail.com"))
                 .license("The MIT License")
                 .licenseUrl("https://opensource.org/licenses/MIT")
                 .version("V2")
