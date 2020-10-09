@@ -41,14 +41,15 @@
     </update>
 
     <!-- 删除-->
-    <update id="deleteById" parameterType="java.lang.Integer">
-       delete  example WHERE id=#{id}
+    <update id="deleteById" parameterType="java.lang.String">
+       delete from example WHERE id=#{id}
     </update>
 
     <!--根据名称查询-->
-    <select id="findByName" parameterType="java.lang.String"  resultType="ExampleModel">
-          SELECT  *
-               FROM  example  a  where a.name=#{name}
+    <select id="findByName" parameterType="java.lang.String"  resultType="com.simple.example.dto.ExampleVO">
+          SELECT  id,name,email,photo_url as photoUrl,phone_number as phoneNumber,confirmed_and_active as confirmedAndActive,
+          support,message,updated_date as updatedDate
+               FROM  example  where name=#{name}
     </select>
 
 

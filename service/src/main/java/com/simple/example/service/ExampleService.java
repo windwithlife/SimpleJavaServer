@@ -19,6 +19,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ExampleService {
@@ -67,6 +69,31 @@ public class ExampleService {
             throw new ServiceException("failed to add data to database!");
         }
 
+
+    }
+
+    public String deleteById(String id){
+        try{
+            int count =  this.exampleDao.deleteById(id);
+            if (count >0){
+                return id;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+            ServiceHelper.handleServiceException(e, "failed to delete model");
+            return null;
+        }
+
+    }
+
+    public List<ExampleVO> findByName(String name){
+        try{
+            return this.exampleDao.findByName(name);
+        }catch (Exception ex){
+            throw new ServiceException("failed to findbyname");
+
+        }
 
     }
 

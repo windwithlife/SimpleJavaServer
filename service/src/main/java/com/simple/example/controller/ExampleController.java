@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/example/mobile")
@@ -90,6 +91,8 @@ public class ExampleController {
         GenericResponse result = new GenericResponse(vo);
         return result;
     }
+
+
     @PostMapping(path = "/update")
     BaseResponse update(@RequestBody GenericRequest req){
 
@@ -100,7 +103,21 @@ public class ExampleController {
         return result;
     }
 
+    @PostMapping(path = "/deleteById")
+    BaseResponse delete(@RequestParam String id){
+        String resultId = this.exampleService.deleteById(id);
+        GenericResponse result = new GenericResponse();
+        result.addKey$Value("deleteId", resultId);
+        return result;
+    }
 
+    @PostMapping(path = "/findByName")
+    BaseResponse findByName(@RequestParam String name){
+        List<ExampleVO> results = this.exampleService.findByName(name);
+        GenericResponse result = new GenericResponse();
+        result.addKey$Value("list", results);
+        return result;
+    }
 
     @PostMapping(path = "/create")
     public GenericAccountResponse createAccount(@RequestBody @Valid CreateAccountRequest request) {

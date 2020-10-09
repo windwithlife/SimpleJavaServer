@@ -1,6 +1,7 @@
 package com.simple.example.dao;
 
 
+import com.simple.example.dto.ExampleVO;
 import com.simple.example.model.ExampleModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,17 +22,17 @@ public interface ExampleDao {
 
 
 
-    List<ExampleModel> findByName(String name) throws Exception;
+    List<ExampleVO> findByName(String name) throws Exception;
     /**
      * 添加
-     * @param addModel
+     * @param
      * @throws Exception
      */
     void add(ExampleModel model) throws Exception;
 
     /**
      * 修改
-     * @param updateModel
+     * @param
      * @throws Exception
      */
     void update(ExampleModel model) throws Exception;
@@ -60,7 +61,7 @@ public interface ExampleDao {
      * @param paramMap
      * @throws Exception
      */
-    void deleteById(Map<String, Object> paramMap) throws Exception;
+    int deleteById(String id) throws Exception;
 
 
 }
