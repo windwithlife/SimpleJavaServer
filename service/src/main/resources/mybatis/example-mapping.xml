@@ -33,8 +33,7 @@
     <!-- 修改-->
     <update id="update" parameterType="ExampleModel">
         UPDATE  example a  SET a.name=#{name},a.email=#{email},
-        a.phone_url=#{photoUrl},a.phone_number=#{phoneNumber},a.confirm_and_active=#{confirmedAndActive},
-        a.a_status=#{aStatus},a.a_order=#{aOrder},
+        a.photo_url=#{photoUrl},a.phone_number=#{phoneNumber},a.confirmed_and_active=#{confirmedAndActive},
         <if test="message!=null and message!=''">
             a.message=#{message},
         </if>

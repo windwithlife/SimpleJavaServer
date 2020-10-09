@@ -58,7 +58,7 @@ public class ExampleService {
     public ExampleVO update(ExampleDto example){
         try{
             ExampleModel model = this.convertToModel(example);
-            this.exampleDao.add(model);
+            this.exampleDao.update(model);
 
             return this.convertToVO(model);
 
