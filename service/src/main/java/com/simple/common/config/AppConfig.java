@@ -17,7 +17,6 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @Import(value = {SimpleRestConfig.class})
-@SuppressWarnings(value = "Duplicates")
 public class AppConfig {
 
     public static final String ASYNC_EXECUTOR_NAME = "asyncExecutor";
@@ -36,10 +35,10 @@ public class AppConfig {
         return executor;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
