@@ -115,7 +115,8 @@ public class ExampleController {
     BaseResponse findByName(@RequestParam String name){
         List<ExampleVO> results = this.exampleService.findByName(name);
         GenericResponse result = new GenericResponse();
-        result.addKey$Value("list", results);
+        result.addKey$Value("itemsCount", results.size());
+        result.addKey$Value("items", results);
         return result;
     }
 
