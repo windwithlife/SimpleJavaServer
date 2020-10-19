@@ -7,6 +7,8 @@ import com.simple.common.api.BaseResponse;
 import com.simple.common.api.GenericRequest;
 import com.simple.common.api.GenericResponse;
 import com.simple.common.auth.AuthConstant;
+import com.simple.common.auth.Authorize;
+import com.simple.common.auth.LoginRequired;
 import com.simple.example.dto.*;
 import com.simple.example.service.ExampleService;
 import org.jose4j.jwk.RsaJsonWebKey;
@@ -18,34 +20,38 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/example/mobile")
+@RequestMapping("/mobile/exampleService")
 @Validated
 public class ExampleController {
-    static RsaJsonWebKey jwk = null;
+
 
     static final ILogger logger = SLoggerFactory.getLogger(ExampleController.class);
 
     @Autowired
     private ExampleService exampleService;
 
-
+    //支持，但不建议使用
     @PostMapping(path = "/test")
     BaseResponse changeEmail(@RequestHeader(AuthConstant.AUTHORIZATION_HEADER) String authz, @RequestParam @Valid String request){
         BaseResponse result = BaseResponse.build().message(request);
         return result;
     }
 
+    //支持，但不建议使用
     @PostMapping(path = "/test1")
     BaseResponse test1(@RequestParam @Valid String request){
         BaseResponse result = BaseResponse.build().message(request);
         return result;
     }
 
+    //支持，但不建议使用
     @PostMapping(path = "/test2")
     BaseResponse test2(@RequestBody @Valid CreateAccountRequest request){
         BaseResponse result = BaseResponse.build().message(request.getName());
         return result;
     }
+
+    //支持，但不建议使用
     @PostMapping(path = "/test3")
     ExampleVO test3(@RequestBody ExampleDto request){
         return ExampleVO.builder().name(request.getName()).email(request.getEmail()).build();
@@ -68,7 +74,8 @@ public class ExampleController {
        return result;
     }
 
-    @PostMapping(path = "/test7")
+    @Authorize("guest")
+    @PostMapping(path = "/testAuthorize")
     BaseResponse test7(@RequestBody GenericRequest req, @RequestParam String inputString){
         GenericResponse result = GenericResponse.build()
                 .addKey$Value("msg", inputString)
@@ -76,7 +83,8 @@ public class ExampleController {
         return result;
     }
 
-    @PostMapping(path = "/test8")
+    @PostMapping(path = "/testLogin")
+    @LoginRequired
     BaseResponse test8(@RequestBody GenericRequest req, @RequestParam String inputString){
         ExampleDto request  = req.getObject(ExampleDto.class);
         GenericResponse result = new GenericResponse();
@@ -120,6 +128,7 @@ public class ExampleController {
         return result;
     }
 
+    //支持，但不建议使用，此处支持微服务内RPC
     @PostMapping(path = "/create")
     public GenericAccountResponse createAccount(@RequestBody @Valid CreateAccountRequest request) {
         AccountDto exampleDto = exampleService.create(request.getName(), request.getEmail(), request.getPhoneNumber(),request.getPassword());
