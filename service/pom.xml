@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>com.simple</groupId>
-            <artifactId>exampleModel-api</artifactId>
+            <artifactId>example-api</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
