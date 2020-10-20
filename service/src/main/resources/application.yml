@@ -4,7 +4,7 @@ spring:
   profiles:
     active: dev
   application:
-    name: account-service
+    name: example-service
   datasource:
     url: ${NEWS_DATASOURCE_URL}
     username: ${NEWS_DATASOURCE_USERNAME}
@@ -12,11 +12,8 @@ spring:
     tomcat:
       test-while-idle: true
       validation-query: SELECT 1
-  jpa:
-    hibernate:
-      ddl-auto: validate
 
-staffjoy:
+simple:
   common:
     sentry-dsn: ${SENTRY_DSN}
     deploy-env: ${DEPLOY:V2}
