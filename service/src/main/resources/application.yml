@@ -25,4 +25,4 @@ staffjoy:
 
 server:
   servlet:
-    context-path: /simple
+    context-path: /simple/example
