@@ -1,5 +1,5 @@
 logging:
-  config: /etc/staffjoy/logback-spring.xml
+  config: /etc/simple/logback-spring.xml
 
 #redis参数配置
 rspring:
