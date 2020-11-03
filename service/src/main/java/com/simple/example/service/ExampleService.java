@@ -4,7 +4,7 @@ import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 import com.simple.common.error.ServiceHelper;
 import com.simple.example.dao.ExampleDao;
-import com.simple.example.dto.AccountDto;
+//import com.simple.example.dto.AccountDto;
 import com.simple.example.dto.ExampleDto;
 import com.simple.example.dto.ExampleVO;
 import com.simple.example.model.ExampleModel;
@@ -105,6 +105,7 @@ public class ExampleService {
         return modelMapper.map(exampleDto, ExampleModel.class);
     }
 
+    /*
     public AccountDto create(String name, String email, String phoneNumber,String pwd) {
 
 
@@ -145,6 +146,6 @@ public class ExampleService {
         return this.modelMapper.map(exampleModel, AccountDto.class);
 
     }
-
+    */
 
 }

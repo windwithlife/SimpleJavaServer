@@ -37,6 +37,7 @@ public class ExampleController {
         return result;
     }
 
+    /*
     //支持，但不建议使用
     @PostMapping(path = "/test1")
     BaseResponse test1(@RequestParam @Valid String request){
@@ -62,7 +63,7 @@ public class ExampleController {
     ExampleResponse test4(@RequestBody ExampleRequest request){
         return ExampleResponse.builder().name(request.getName()).email(request.getEmail()).build();
     }
-
+    */
     @PostMapping(path = "/test5")
     BaseResponse test5(@RequestBody GenericRequest req){
         return new GenericResponse(req);
@@ -127,13 +128,13 @@ public class ExampleController {
         result.addKey$Value("items", results);
         return result;
     }
-
-    //支持，但不建议使用，此处支持微服务内RPC
-    @PostMapping(path = "/create")
-    public GenericAccountResponse createAccount(@RequestBody @Valid CreateAccountRequest request) {
-        AccountDto exampleDto = exampleService.create(request.getName(), request.getEmail(), request.getPhoneNumber(),request.getPassword());
-        GenericAccountResponse genericAccountResponse = new GenericAccountResponse(exampleDto);
-        return genericAccountResponse;
-    }
+//
+//    //支持，但不建议使用，此处支持微服务内RPC
+//    @PostMapping(path = "/create")
+//    public GenericAccountResponse createAccount(@RequestBody @Valid CreateAccountRequest request) {
+//        AccountDto exampleDto = exampleService.create(request.getName(), request.getEmail(), request.getPhoneNumber(),request.getPassword());
+//        GenericAccountResponse genericAccountResponse = new GenericAccountResponse(exampleDto);
+//        return genericAccountResponse;
+//    }
 
 }
