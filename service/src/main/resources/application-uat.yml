@@ -1,8 +1,15 @@
 logging:
   config: /etc/simple/logback-spring.xml
+server:
+  port: 80
 
 #redis参数配置
 rspring:
+  spring:
+    datasource:
+      url: jdbc:mysql://test.koudaibook.com:30006/mydb?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: Password!&
   redis:
     host: redis-standalone
     password: meetinglive
