@@ -18,9 +18,5 @@ simple:
   domainName: koudaibook.com
   common:
     sentry-dsn: https://80bbf4ae778b525f9fe72e2813cd5246@sentry.io/1271087
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
+
 

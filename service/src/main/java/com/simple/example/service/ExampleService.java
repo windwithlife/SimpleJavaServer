@@ -5,6 +5,7 @@ import com.github.structlog4j.SLoggerFactory;
 import com.simple.common.error.ServiceHelper;
 import com.simple.example.dao.ExampleDao;
 //import com.simple.example.dto.AccountDto;
+import com.simple.example.dao.ExampleRepository;
 import com.simple.example.dto.ExampleDto;
 import com.simple.example.dto.ExampleVO;
 import com.simple.example.model.ExampleModel;
@@ -19,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
@@ -29,6 +31,7 @@ public class ExampleService {
 
     private final ExampleRepo exampleRepo;
     private final ExampleDao exampleDao;
+    private final ExampleRepository dao;
 
     private final AppProps appProps;
 
@@ -37,6 +40,7 @@ public class ExampleService {
     private final ServiceHelper serviceHelper;
 
     private final ModelMapper modelMapper;
+    private final EntityManager entityManager;
 
 
     public ExampleVO save(ExampleDto example){
@@ -97,6 +101,11 @@ public class ExampleService {
 
     }
 
+    public List<ExampleDto> findAllPages(){
+        List<ExampleDto> list = dao.findList("select * from example", null,this.entityManager, ExampleDto.class);
+        return  list;
+    }
+
     private ExampleVO convertToVO(ExampleModel exampleModel) {
         return modelMapper.map(exampleModel, ExampleVO.class);
     }
@@ -105,47 +114,5 @@ public class ExampleService {
         return modelMapper.map(exampleDto, ExampleModel.class);
     }
 
-    /*
-    public AccountDto create(String name, String email, String phoneNumber,String pwd) {
-
-
-
-        if (StringUtils.hasText(phoneNumber)) {
-            ExampleModel foundExampleModel = exampleRepo.findAccountByPhoneNumber(phoneNumber);
-            if (foundExampleModel != null) {
-                throw new ServiceException("A user with that phonenumber already exists. Try a new phonenumber");
-            }
-        }
-
-        // Column name/email/phone_number cannot be null
-        if (name == null) {
-            name = "";
-        }
-        if (email == null) {
-            email = "";
-        }
-        if (phoneNumber == null) {
-            phoneNumber = "";
-        }
-
-        ExampleModel exampleModel = ExampleModel.builder()
-                .email(email).name(name).phoneNumber(phoneNumber)
-                .build();
-
-
-        try {
-            ExampleModel result = exampleRepo.save(exampleModel);
-            String userId = result.getId();
-            //this.updatePassword(userId, pwd);
-        } catch (Exception ex) {
-            String errMsg = "Could not create user exampleModel";
-            serviceHelper.handleException(logger, ex, errMsg);
-            throw new ServiceException(errMsg, ex);
-        }
-
-        return this.modelMapper.map(exampleModel, AccountDto.class);
-
-    }
-    */
 
 }
