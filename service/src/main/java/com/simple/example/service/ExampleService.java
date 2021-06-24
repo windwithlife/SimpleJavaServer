@@ -32,13 +32,9 @@ public class ExampleService {
     private final ExampleRepo exampleRepo;
     private final ExampleDao exampleDao;
     private final ExampleRepository dao;
-
     private final AppProps appProps;
-
     private final EnvConfig envConfig;
-
     private final ServiceHelper serviceHelper;
-
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
 

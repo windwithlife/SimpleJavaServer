@@ -1,6 +1,5 @@
 package com.simple.example.dao;
 
-
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.query.internal.NativeQueryImpl;
 import org.hibernate.transform.Transformers;
@@ -19,8 +18,7 @@ import java.util.Map;
 
 public interface BaseRepository {
 
-
-    default <T> Page<T> findPage(String querySql, Map<String, Object> params, EntityManager entityManager, Pageable pageable, Class<T> clazz) throws IllegalAccessException, InstantiationException {
+    default <T> Page<T> queryPage(String querySql, Map<String, Object> params, EntityManager entityManager, Pageable pageable, Class<T> clazz) throws IllegalAccessException, InstantiationException {
         Query listQuery=entityManager.createNativeQuery(querySql);
         listQuery.setFirstResult((int) pageable.getOffset());
         listQuery.setMaxResults(pageable.getPageSize());
@@ -53,7 +51,7 @@ public interface BaseRepository {
         return new PageImpl<>(resultList, pageable, count.longValue());
     }
 
-    default <T> Page<T> findPage(String querySql, Map<String, Object> params, EntityManager entityManager, int pageIndex, int pageSize, Class<T> clazz) throws IllegalAccessException, InstantiationException {
+    default <T> Page<T> queryPage(String querySql, Map<String, Object> params, EntityManager entityManager, int pageIndex, int pageSize, Class<T> clazz) throws IllegalAccessException, InstantiationException {
 
         Query listQuery=entityManager.createNativeQuery(querySql);
 
@@ -87,6 +85,41 @@ public interface BaseRepository {
         BigInteger count=(BigInteger) countQuery.getSingleResult();
 
         return new PageImpl<>(resultList, pageable, count.longValue());
+    }
+    default <T> List<T> findPage(String querySql, Map<String, Object> params, EntityManager entityManager, int pageIndex, int pageSize, Class<T> clazz) throws IllegalAccessException, InstantiationException {
+
+        Query listQuery=entityManager.createNativeQuery(querySql);
+
+        Pageable pageable= PageRequest.of(pageIndex,pageSize);
+        listQuery.setFirstResult((int) pageable.getOffset());
+        listQuery.setMaxResults(pageable.getPageSize());
+        listQuery.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);//自动映射成map[稍微影响一点查询效率，但是封装后比较方便查看对应的字段，不需要再使用Object[] obj,obj[0],obj[1]...的方式]
+        for (Map.Entry<String, Object> entry : params.entrySet()) {//加入参数
+            listQuery.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        int startIndex = querySql.indexOf("select") + "select".length();
+        int endIndex   = querySql.indexOf("from");
+        String totalSql = StringUtils.overlay(querySql, " count(*) ", startIndex,endIndex);
+        System.out.println("Total SQL ===> " + totalSql);
+        Query countQuery=entityManager.createNativeQuery(totalSql);
+
+        List<Map<String,Object>> list= listQuery.getResultList();//由于上面已经将结果映射成了map所以这里直接转化成Map没问题
+        List<T> resultList=new ArrayList<>();
+        for(Map<String,Object> map:list){//遍历map将map转化为实体类bean
+            T bean=clazz.newInstance();//实例化T，可能会抛出两个异常IllegalAccessException、InstantiationException
+            for(Map.Entry<String,Object> entry:map.entrySet()){//格式化Timestamp为String类型,数据库中日期类型为Timestamp，在这里需要转化一下，直接在前端使用
+                if(entry.getValue() instanceof BigInteger){
+                    map.put(entry.getKey(),((BigInteger) entry.getValue()).longValue());
+                }
+            }
+            BeanMap.create(bean).putAll(map);
+
+            resultList.add(bean);
+        }
+        BigInteger count=(BigInteger) countQuery.getSingleResult();
+
+        return resultList;
     }
     default <T> List<T> findList(String querySql, Map<String, Object> params, EntityManager entityManager, Class<T> clazz) {
         Query listQuery=entityManager.createNativeQuery(querySql);
