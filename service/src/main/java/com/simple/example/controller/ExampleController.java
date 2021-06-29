@@ -3,9 +3,7 @@ package com.simple.example.controller;
 
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
-import com.simple.common.api.BaseResponse;
-import com.simple.common.api.GenericRequest;
-import com.simple.common.api.GenericResponse;
+import com.simple.common.api.*;
 import com.simple.common.auth.AuthConstant;
 import com.simple.common.auth.Authorize;
 import com.simple.common.auth.LoginRequired;
@@ -84,50 +82,24 @@ public class ExampleController {
         return result;
     }
 
-    @PostMapping(path = "/testLogin")
+    @PostMapping(path = "/example8")
     @LoginRequired
-    BaseResponse test8(@RequestBody GenericRequest req, @RequestParam String inputString){
+    BaseResponse example8(@RequestBody GenericRequest req, @RequestParam String inputString){
         ExampleDto request  = req.getObject(ExampleDto.class);
         GenericResponse result = new GenericResponse();
         result.setDataObject(request);
         return result;
     }
 
-    @PostMapping(path = "/addnew")
-    BaseResponse createExample(@RequestBody GenericRequest req){
-        ExampleDto paramObj  = req.getObject(ExampleDto.class);
-        ExampleVO vo = this.exampleService.save(paramObj);
-        GenericResponse result = new GenericResponse(vo);
-        return result;
+    @PostMapping(path = "/example9")
+    @LoginRequired
+    public SimpleResponse<ExampleDto> example9(@RequestBody SimpleRequest<ExampleDto> params){
+        ExampleDto request  = params.getParams();
+        SimpleResponse<ExampleDto> result = new SimpleResponse<ExampleDto>();
+        return result.success(request);
     }
 
 
-    @PostMapping(path = "/update")
-    BaseResponse update(@RequestBody GenericRequest req){
-
-        ExampleDto dto  = req.getObject(ExampleDto.class);
-        ExampleVO vo = this.exampleService.update(dto);
-        GenericResponse result = new GenericResponse();
-        result.setDataObject(vo);
-        return result;
-    }
-
-    @PostMapping(path = "/deleteById")
-    BaseResponse delete(@RequestParam String id){
-        String resultId = this.exampleService.deleteById(id);
-        GenericResponse result = new GenericResponse();
-        result.addKey$Value("deleteId", resultId);
-        return result;
-    }
-
-    @PostMapping(path = "/findByName")
-    BaseResponse findByName(@RequestParam String name){
-        List<ExampleVO> results = this.exampleService.findByName(name);
-        GenericResponse result = new GenericResponse();
-        result.addKey$Value("itemsCount", results.size());
-        result.addKey$Value("items", results);
-        return result;
-    }
 //
 //    //支持，但不建议使用，此处支持微服务内RPC
 //    @PostMapping(path = "/create")

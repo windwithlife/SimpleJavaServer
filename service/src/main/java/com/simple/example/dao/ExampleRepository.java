@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ExampleRepository extends JpaRepository<ExampleModel, Long>,BaseRepository {
+public interface ExampleRepository extends JpaRepository<ExampleModel, Long> {
     public List<ExampleModel> findByName(String name);
 }

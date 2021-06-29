@@ -3,6 +3,7 @@ package com.simple.example.service;
 import com.github.structlog4j.ILogger;
 import com.github.structlog4j.SLoggerFactory;
 import com.simple.common.error.ServiceHelper;
+import com.simple.example.dao.ContextQuery;
 import com.simple.example.dao.ExampleDao;
 //import com.simple.example.dto.AccountDto;
 import com.simple.example.dao.ExampleRepository;
@@ -37,6 +38,7 @@ public class ExampleService {
     private final ServiceHelper serviceHelper;
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
+    private final ContextQuery contextQuery;
 
 
     public ExampleVO save(ExampleDto example){
@@ -97,11 +99,11 @@ public class ExampleService {
 
     }
 
+
     public List<ExampleDto> findAllPages(){
-        List<ExampleDto> list = dao.findList("select * from example", null,this.entityManager, ExampleDto.class);
+        List<ExampleDto> list = contextQuery.findList("select * from example", ExampleDto.class);
         return  list;
     }
-
     private ExampleVO convertToVO(ExampleModel exampleModel) {
         return modelMapper.map(exampleModel, ExampleVO.class);
     }
